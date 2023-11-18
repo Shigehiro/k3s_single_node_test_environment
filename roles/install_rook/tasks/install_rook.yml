@@ -1,0 +1,95 @@
+---
+- name: git checkout
+  ansible.builtin.git:
+    repo: 'https://github.com/rook/rook.git'
+    dest: /root/rook
+    update: no
+
+- name: ensure k3s is up and running
+  ansible.builtin.systemd:
+    state: started
+    name: k3s.service
+
+- name: ensure k8s is up and running
+  ansible.builtin.command:
+    cmd: kubectl cluster-info
+  failed_when: false
+  changed_when: false
+  ignore_errors: true
+  register: cluster_info
+
+- name: check ceph operator exists
+  ansible.builtin.shell:
+    cmd: kubectl get pod -n rook-ceph |grep -c rook-ceph-operator
+  failed_when: false
+  changed_when: false
+  ignore_errors: true
+  register: ceph_operator
+
+- name: install rook crds, common, operator
+  block:
+  - name: create crds, common, operator
+    ansible.builtin.command:
+      cmd: kubectl create -f crds.yaml -f common.yaml -f operator.yaml
+      chdir: /root/rook/deploy/examples
+  - name: wait till operator is up and running
+    ansible.builtin.shell:
+      cmd: kubectl get pod -n rook-ceph |grep rook-ceph-operator | grep -c Running
+    register: output
+    until: output.stdout | int == 1
+    retries: 30
+    delay: 10
+  when: 
+  - "cluster_info.rc | int == 0"
+  - "ceph_operator.stdout | int == 0"
+
+- name: check ceph cluster pods exist
+  ansible.builtin.shell:
+    cmd: >
+      kubectl get po -n rook-ceph | 
+      grep -c -E 'csi-cephfsplugin|csi-rbdplugin|rook-ceph-mon|csi-cephfsplugin-provisioner|csi-rbdplugin-provisioner'
+  failed_when: false
+  changed_when: false
+  ignore_errors: true
+  register: ceph_cluster
+
+- name: create ceph cluster
+  block:
+  - name: create ceph cluster
+    ansible.builtin.command:
+      cmd: kubectl create -f cluster-test.yaml
+      chdir: /root/rook/deploy/examples
+  - name: wait till ceph cluster is up and running
+    ansible.builtin.shell:
+      cmd: >
+        kubectl get po -n rook-ceph | 
+        grep -E 'csi-cephfsplugin|csi-rbdplugin|rook-ceph-mon|csi-cephfsplugin-provisioner|csi-rbdplugin-provisioner' | 
+        grep Running -c
+    register: cluster_state
+    until: cluster_state.stdout | int == 5
+    retries: 30
+    delay: 20
+  when: "ceph_cluster.stdout | int == 0"
+
+- name: check toolbox exists
+  ansible.builtin.shell:
+    cmd: kubectl get po -n rook-ceph |grep rook-ceph-tools -c
+  failed_when: false
+  changed_when: false
+  ignore_errors: true
+  register: ceph_toolbox
+
+- name: install toolbox
+  block:
+  - name: install toolbox
+    ansible.builtin.command:
+      cmd: kubectl create -f toolbox.yaml
+      chdir: /root/rook/deploy/examples
+  - name: wait till toolbox is up and running
+    ansible.builtin.shell:
+      cmd: kubectl get po -n rook-ceph |grep rook-ceph-tools |grep Running -c
+    register: cluster_state
+    until: cluster_state.stdout | int >= 1
+    retries: 30
+    delay: 10
+  when: "ceph_toolbox.stdout | int == 0"

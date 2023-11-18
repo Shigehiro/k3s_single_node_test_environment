@@ -1,0 +1,5 @@
+# default false (klipper-lb)
+disable_service_lb: true
+
+# default false
+install_rook: true

@@ -1,0 +1,5 @@
+---
+# tasks file for install_k3s
+- name: install k3s
+  ansible.builtin.include_tasks:
+    file: install_k3s.yml

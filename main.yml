@@ -1,0 +1,12 @@
+---
+- hosts: k3s
+  gather_facts: false
+  tasks:
+  - name: install k3s
+    ansible.builtin.import_role:
+      name: install_k3s 
+
+  - name: install k3s
+    ansible.builtin.import_role:
+      name: install_rook
+    when: install_rook
