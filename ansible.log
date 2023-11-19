@@ -760,3 +760,41 @@
 2023-11-20 00:26:06,681 p=141418 u=hattori n=ansible | changed: [lab04-k3s]
 2023-11-20 00:26:06,691 p=141418 u=hattori n=ansible | PLAY RECAP *****************************************************************************************************************************************************************************
 2023-11-20 00:26:06,691 p=141418 u=hattori n=ansible | lab04-k3s                  : ok=27   changed=9    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2023-11-20 01:00:29,238 p=220478 u=hattori n=ansible | [WARNING]: Could not match supplied host pattern, ignoring: k3s
+
+2023-11-20 01:00:29,239 p=220478 u=hattori n=ansible | playbook: main.yml
+2023-11-20 01:00:30,005 p=220485 u=hattori n=ansible | {
+    "ansible.builtin.runas": "Run As user",
+    "ansible.builtin.su": "Substitute User",
+    "ansible.builtin.sudo": "Substitute User DO",
+    "ansible.netcommon.enable": "Switch to elevated permissions on a network device",
+    "community.general.doas": "Do As user",
+    "community.general.dzdo": "Centrify's Direct Authorize",
+    "community.general.ksu": "Kerberos substitute user",
+    "community.general.machinectl": "Systemd's machinectl privilege escalation",
+    "community.general.pbrun": "PowerBroker run",
+    "community.general.pfexec": "profile based execution",
+    "community.general.pmrun": "Privilege Manager run",
+    "community.general.sesu": "CA Privileged Access Manager",
+    "community.general.sudosu": "Run tasks using sudo su -",
+    "containers.podman.podman_unshare": "Run tasks using podman unshare"
+}
+2023-11-20 01:00:50,680 p=220888 u=hattori n=ansible | [WARNING]: Could not match supplied host pattern, ignoring: k3s
+
+2023-11-20 01:00:50,680 p=220888 u=hattori n=ansible | playbook: main.yml
+2023-11-20 01:00:51,460 p=220910 u=hattori n=ansible | {
+    "ansible.builtin.runas": "Run As user",
+    "ansible.builtin.su": "Substitute User",
+    "ansible.builtin.sudo": "Substitute User DO",
+    "ansible.netcommon.enable": "Switch to elevated permissions on a network device",
+    "community.general.doas": "Do As user",
+    "community.general.dzdo": "Centrify's Direct Authorize",
+    "community.general.ksu": "Kerberos substitute user",
+    "community.general.machinectl": "Systemd's machinectl privilege escalation",
+    "community.general.pbrun": "PowerBroker run",
+    "community.general.pfexec": "profile based execution",
+    "community.general.pmrun": "Privilege Manager run",
+    "community.general.sesu": "CA Privileged Access Manager",
+    "community.general.sudosu": "Run tasks using sudo su -",
+    "containers.podman.podman_unshare": "Run tasks using podman unshare"
+}

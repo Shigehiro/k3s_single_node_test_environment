@@ -1,3 +1,5 @@
 ---
 # defaults file for install_rook
 install_rook: false
+create_block_storage: true
+create_shared_filesystem: true

@@ -1,0 +1,5 @@
+---
+# tasks file for install_kustomize
+- name: install kustomize
+  ansible.builtin.include_tasks:
+    file: install_kustomize.yml

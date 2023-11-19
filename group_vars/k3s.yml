@@ -3,5 +3,10 @@ disable_service_lb: true
 
 # default false
 install_rook: true
+
+# default true. make sure install_rook is true
 create_block_storage: true
 create_shared_filesystem: true
+
+# default false
+install_kustomize: true
