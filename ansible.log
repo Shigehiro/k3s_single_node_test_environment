@@ -226,3 +226,124 @@
 2023-11-19 23:41:28,152 p=57340 u=hattori n=ansible | changed: [lab04-k3s]
 2023-11-19 23:41:28,162 p=57340 u=hattori n=ansible | PLAY RECAP *****************************************************************************************************************************************************************************
 2023-11-19 23:41:28,163 p=57340 u=hattori n=ansible | lab04-k3s                  : ok=21   changed=7    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2023-11-19 23:52:41,454 p=91112 u=hattori n=ansible | [WARNING]: Could not match supplied host pattern, ignoring: k3s
+
+2023-11-19 23:52:41,455 p=91112 u=hattori n=ansible | playbook: main.yml
+2023-11-19 23:52:42,264 p=91144 u=hattori n=ansible | {
+    "ansible.builtin.runas": "Run As user",
+    "ansible.builtin.su": "Substitute User",
+    "ansible.builtin.sudo": "Substitute User DO",
+    "ansible.netcommon.enable": "Switch to elevated permissions on a network device",
+    "community.general.doas": "Do As user",
+    "community.general.dzdo": "Centrify's Direct Authorize",
+    "community.general.ksu": "Kerberos substitute user",
+    "community.general.machinectl": "Systemd's machinectl privilege escalation",
+    "community.general.pbrun": "PowerBroker run",
+    "community.general.pfexec": "profile based execution",
+    "community.general.pmrun": "Privilege Manager run",
+    "community.general.sesu": "CA Privileged Access Manager",
+    "community.general.sudosu": "Run tasks using sudo su -",
+    "containers.podman.podman_unshare": "Run tasks using podman unshare"
+}
+2023-11-19 23:57:41,479 p=100898 u=hattori n=ansible | PLAY [k3s] *****************************************************************************************************************************************************************************
+2023-11-19 23:57:41,506 p=100898 u=hattori n=ansible | TASK [install_k3s : install k3s] *******************************************************************************************************************************************************
+2023-11-19 23:57:41,522 p=100898 u=hattori n=ansible | included: /home/hattori/DockerCompose_works/k3s_single_node_test_environment/roles/install_k3s/tasks/install_k3s.yml for lab04-k3s
+2023-11-19 23:57:41,526 p=100898 u=hattori n=ansible | TASK [install_k3s : put selinux in permissive] *****************************************************************************************************************************************
+2023-11-19 23:57:42,412 p=100898 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:57:42,416 p=100898 u=hattori n=ansible | TASK [install_k3s : check that /usr/local/bin/k3s exists] ******************************************************************************************************************************
+2023-11-19 23:57:42,870 p=100898 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:57:42,873 p=100898 u=hattori n=ansible | TASK [install_k3s : download install script] *******************************************************************************************************************************************
+2023-11-19 23:57:42,883 p=100898 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:57:42,886 p=100898 u=hattori n=ansible | TASK [install_k3s : install k3s] *******************************************************************************************************************************************************
+2023-11-19 23:57:42,895 p=100898 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:57:42,898 p=100898 u=hattori n=ansible | TASK [install_k3s : install k3s without service lb] ************************************************************************************************************************************
+2023-11-19 23:57:42,907 p=100898 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:57:42,911 p=100898 u=hattori n=ansible | TASK [install_k3s : dump output] *******************************************************************************************************************************************************
+2023-11-19 23:57:42,920 p=100898 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:57:42,923 p=100898 u=hattori n=ansible | TASK [install_k3s : ensure k3s is up and running] **************************************************************************************************************************************
+2023-11-19 23:57:43,516 p=100898 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:57:43,520 p=100898 u=hattori n=ansible | TASK [install_rook : install rook] *****************************************************************************************************************************************************
+2023-11-19 23:57:43,539 p=100898 u=hattori n=ansible | included: /home/hattori/DockerCompose_works/k3s_single_node_test_environment/roles/install_rook/tasks/install_rook.yml for lab04-k3s
+2023-11-19 23:57:43,543 p=100898 u=hattori n=ansible | TASK [install_rook : git checkout] *****************************************************************************************************************************************************
+2023-11-19 23:57:43,941 p=100898 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:57:43,944 p=100898 u=hattori n=ansible | TASK [install_rook : ensure k3s is up and running] *************************************************************************************************************************************
+2023-11-19 23:57:44,351 p=100898 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:57:44,354 p=100898 u=hattori n=ansible | TASK [install_rook : ensure k8s is up and running] *************************************************************************************************************************************
+2023-11-19 23:57:44,808 p=100898 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:57:44,811 p=100898 u=hattori n=ansible | TASK [install_rook : check ceph operator exists] ***************************************************************************************************************************************
+2023-11-19 23:57:45,229 p=100898 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:57:45,234 p=100898 u=hattori n=ansible | TASK [install_rook : cusure /var/lib/rook dose not exist] ******************************************************************************************************************************
+2023-11-19 23:57:45,265 p=100898 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:57:45,269 p=100898 u=hattori n=ansible | TASK [install_rook : create crds, common, operator] ************************************************************************************************************************************
+2023-11-19 23:57:45,300 p=100898 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:57:45,303 p=100898 u=hattori n=ansible | TASK [install_rook : wait till operator is up and running] *****************************************************************************************************************************
+2023-11-19 23:57:45,334 p=100898 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:57:45,337 p=100898 u=hattori n=ansible | TASK [install_rook : check ceph cluster pods exist] ************************************************************************************************************************************
+2023-11-19 23:57:45,723 p=100898 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:57:45,726 p=100898 u=hattori n=ansible | TASK [install_rook : create ceph cluster] **********************************************************************************************************************************************
+2023-11-19 23:57:45,750 p=100898 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:57:45,753 p=100898 u=hattori n=ansible | TASK [install_rook : wait till ceph cluster is up and running] *************************************************************************************************************************
+2023-11-19 23:57:45,778 p=100898 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:57:45,781 p=100898 u=hattori n=ansible | TASK [install_rook : check toolbox exists] *********************************************************************************************************************************************
+2023-11-19 23:57:46,147 p=100898 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:57:46,150 p=100898 u=hattori n=ansible | TASK [install_rook : install toolbox] **************************************************************************************************************************************************
+2023-11-19 23:57:46,174 p=100898 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:57:46,178 p=100898 u=hattori n=ansible | TASK [install_rook : wait till toolbox is up and running] ******************************************************************************************************************************
+2023-11-19 23:57:46,203 p=100898 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:57:46,206 p=100898 u=hattori n=ansible | TASK [install_rook : create block storage] *********************************************************************************************************************************************
+2023-11-19 23:57:46,217 p=100898 u=hattori n=ansible | fatal: [lab04-k3s]: FAILED! => {"msg": "The conditional check 'create_block_storage' failed. The error was: error while evaluating conditional (create_block_storage): 'create_block_storage' is undefined. 'create_block_storage' is undefined\n\nThe error appears to be in '/home/hattori/DockerCompose_works/k3s_single_node_test_environment/roles/install_rook/tasks/main.yml': line 7, column 3, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n\n- name: create block storage\n  ^ here\n"}
+2023-11-19 23:57:46,218 p=100898 u=hattori n=ansible | PLAY RECAP *****************************************************************************************************************************************************************************
+2023-11-19 23:57:46,218 p=100898 u=hattori n=ansible | lab04-k3s                  : ok=11   changed=0    unreachable=0    failed=1    skipped=11   rescued=0    ignored=0   
+2023-11-19 23:58:23,893 p=102758 u=hattori n=ansible | PLAY [k3s] *****************************************************************************************************************************************************************************
+2023-11-19 23:58:23,921 p=102758 u=hattori n=ansible | TASK [install_k3s : install k3s] *******************************************************************************************************************************************************
+2023-11-19 23:58:23,939 p=102758 u=hattori n=ansible | included: /home/hattori/DockerCompose_works/k3s_single_node_test_environment/roles/install_k3s/tasks/install_k3s.yml for lab04-k3s
+2023-11-19 23:58:23,942 p=102758 u=hattori n=ansible | TASK [install_k3s : put selinux in permissive] *****************************************************************************************************************************************
+2023-11-19 23:58:24,566 p=102758 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:58:24,569 p=102758 u=hattori n=ansible | TASK [install_k3s : check that /usr/local/bin/k3s exists] ******************************************************************************************************************************
+2023-11-19 23:58:25,005 p=102758 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:58:25,008 p=102758 u=hattori n=ansible | TASK [install_k3s : download install script] *******************************************************************************************************************************************
+2023-11-19 23:58:25,017 p=102758 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:58:25,020 p=102758 u=hattori n=ansible | TASK [install_k3s : install k3s] *******************************************************************************************************************************************************
+2023-11-19 23:58:25,030 p=102758 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:58:25,033 p=102758 u=hattori n=ansible | TASK [install_k3s : install k3s without service lb] ************************************************************************************************************************************
+2023-11-19 23:58:25,042 p=102758 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:58:25,045 p=102758 u=hattori n=ansible | TASK [install_k3s : dump output] *******************************************************************************************************************************************************
+2023-11-19 23:58:25,055 p=102758 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:58:25,058 p=102758 u=hattori n=ansible | TASK [install_k3s : ensure k3s is up and running] **************************************************************************************************************************************
+2023-11-19 23:58:25,639 p=102758 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:58:25,644 p=102758 u=hattori n=ansible | TASK [install_rook : install rook] *****************************************************************************************************************************************************
+2023-11-19 23:58:25,662 p=102758 u=hattori n=ansible | included: /home/hattori/DockerCompose_works/k3s_single_node_test_environment/roles/install_rook/tasks/install_rook.yml for lab04-k3s
+2023-11-19 23:58:25,666 p=102758 u=hattori n=ansible | TASK [install_rook : git checkout] *****************************************************************************************************************************************************
+2023-11-19 23:58:26,099 p=102758 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:58:26,102 p=102758 u=hattori n=ansible | TASK [install_rook : ensure k3s is up and running] *************************************************************************************************************************************
+2023-11-19 23:58:26,536 p=102758 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:58:26,539 p=102758 u=hattori n=ansible | TASK [install_rook : ensure k8s is up and running] *************************************************************************************************************************************
+2023-11-19 23:58:26,992 p=102758 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:58:26,995 p=102758 u=hattori n=ansible | TASK [install_rook : check ceph operator exists] ***************************************************************************************************************************************
+2023-11-19 23:58:27,485 p=102758 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:58:27,488 p=102758 u=hattori n=ansible | TASK [install_rook : cusure /var/lib/rook dose not exist] ******************************************************************************************************************************
+2023-11-19 23:58:27,519 p=102758 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:58:27,522 p=102758 u=hattori n=ansible | TASK [install_rook : create crds, common, operator] ************************************************************************************************************************************
+2023-11-19 23:58:27,554 p=102758 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:58:27,557 p=102758 u=hattori n=ansible | TASK [install_rook : wait till operator is up and running] *****************************************************************************************************************************
+2023-11-19 23:58:27,587 p=102758 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:58:27,590 p=102758 u=hattori n=ansible | TASK [install_rook : check ceph cluster pods exist] ************************************************************************************************************************************
+2023-11-19 23:58:27,968 p=102758 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:58:27,971 p=102758 u=hattori n=ansible | TASK [install_rook : create ceph cluster] **********************************************************************************************************************************************
+2023-11-19 23:58:27,995 p=102758 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:58:27,997 p=102758 u=hattori n=ansible | TASK [install_rook : wait till ceph cluster is up and running] *************************************************************************************************************************
+2023-11-19 23:58:28,022 p=102758 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:58:28,025 p=102758 u=hattori n=ansible | TASK [install_rook : check toolbox exists] *********************************************************************************************************************************************
+2023-11-19 23:58:28,394 p=102758 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:58:28,397 p=102758 u=hattori n=ansible | TASK [install_rook : install toolbox] **************************************************************************************************************************************************
+2023-11-19 23:58:28,421 p=102758 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:58:28,424 p=102758 u=hattori n=ansible | TASK [install_rook : wait till toolbox is up and running] ******************************************************************************************************************************
+2023-11-19 23:58:28,448 p=102758 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:58:28,451 p=102758 u=hattori n=ansible | TASK [install_rook : create block storage] *********************************************************************************************************************************************
+2023-11-19 23:58:28,464 p=102758 u=hattori n=ansible | included: /home/hattori/DockerCompose_works/k3s_single_node_test_environment/roles/install_rook/tasks/create_block_storage.yml for lab04-k3s
+2023-11-19 23:58:28,472 p=102758 u=hattori n=ansible | TASK [install_rook : check block storage exists] ***************************************************************************************************************************************
+2023-11-19 23:58:28,872 p=102758 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:58:28,874 p=102758 u=hattori n=ansible | TASK [install_rook : create block storage] *********************************************************************************************************************************************
+2023-11-19 23:58:28,898 p=102758 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:58:28,908 p=102758 u=hattori n=ansible | PLAY RECAP *****************************************************************************************************************************************************************************
+2023-11-19 23:58:28,908 p=102758 u=hattori n=ansible | lab04-k3s                  : ok=13   changed=0    unreachable=0    failed=0    skipped=12   rescued=0    ignored=0   

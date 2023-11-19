@@ -3,3 +3,5 @@ disable_service_lb: true
 
 # default false
 install_rook: true
+create_block_storage: true
+create_shared_filesystem: true

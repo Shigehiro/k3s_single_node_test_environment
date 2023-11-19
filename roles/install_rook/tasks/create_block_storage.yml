@@ -1,0 +1,14 @@
+---
+- name: check block storage exists
+  ansible.builtin.shell:
+    cmd: kubectl get -n rook-ceph storageclasses.storage.k8s.io |grep rook-ceph-block -c
+  ignore_errors: true
+  failed_when: false
+  changed_when: false
+  register: block_out
+
+- name: create block storage
+  ansible.builtin.command:
+    cmd: kubectl create -f storageclass-test.yaml
+    chdir: /root/rook/deploy/examples/csi/rbd
+  when: "block_out.stdout | int == 0"
