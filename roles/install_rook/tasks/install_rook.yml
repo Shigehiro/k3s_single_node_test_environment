@@ -28,6 +28,10 @@
 
 - name: install rook crds, common, operator
   block:
+  - name: cusure /var/lib/rook dose not exist
+    ansible.builtin.file:
+      path: /var/lib/rook
+      state: absent
   - name: create crds, common, operator
     ansible.builtin.command:
       cmd: kubectl create -f crds.yaml -f common.yaml -f operator.yaml

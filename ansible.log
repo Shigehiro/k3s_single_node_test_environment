@@ -1,0 +1,228 @@
+2023-11-19 23:09:10,218 p=8847 u=hattori n=ansible | lab04-k3s | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+2023-11-19 23:10:31,330 p=11517 u=hattori n=ansible | PLAY [k3s] *****************************************************************************************************************************************************************************
+2023-11-19 23:10:31,357 p=11517 u=hattori n=ansible | TASK [install_k3s : install k3s] *******************************************************************************************************************************************************
+2023-11-19 23:10:31,375 p=11517 u=hattori n=ansible | included: /home/hattori/DockerCompose_works/k3s_single_node_test_environment/roles/install_k3s/tasks/install_k3s.yml for lab04-k3s
+2023-11-19 23:10:31,378 p=11517 u=hattori n=ansible | TASK [install_k3s : put selinux in permissive] *****************************************************************************************************************************************
+2023-11-19 23:10:32,390 p=11517 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:10:32,393 p=11517 u=hattori n=ansible | TASK [install_k3s : check that /usr/local/bin/k3s exists] ******************************************************************************************************************************
+2023-11-19 23:10:32,769 p=11517 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:10:32,772 p=11517 u=hattori n=ansible | TASK [install_k3s : download install script] *******************************************************************************************************************************************
+2023-11-19 23:10:34,479 p=11517 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:10:34,482 p=11517 u=hattori n=ansible | TASK [install_k3s : install k3s] *******************************************************************************************************************************************************
+2023-11-19 23:10:34,494 p=11517 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:10:34,498 p=11517 u=hattori n=ansible | TASK [install_k3s : install k3s without service lb] ************************************************************************************************************************************
+2023-11-19 23:11:37,143 p=11517 u=hattori n=ansible | changed: [lab04-k3s]
+2023-11-19 23:11:37,147 p=11517 u=hattori n=ansible | TASK [install_k3s : dump output] *******************************************************************************************************************************************************
+2023-11-19 23:11:37,161 p=11517 u=hattori n=ansible | ok: [lab04-k3s] => {
+    "msg": [
+        "[INFO]  Finding release for channel stable",
+        "[INFO]  Using v1.27.7+k3s2 as release",
+        "[INFO]  Downloading hash https://github.com/k3s-io/k3s/releases/download/v1.27.7+k3s2/sha256sum-amd64.txt",
+        "[INFO]  Downloading binary https://github.com/k3s-io/k3s/releases/download/v1.27.7+k3s2/k3s",
+        "[INFO]  Verifying binary download",
+        "[INFO]  Installing k3s to /usr/local/bin/k3s",
+        "[INFO]  Finding available k3s-selinux versions",
+        "CentOS Stream 9 - BaseOS                        7.0 kB/s | 4.4 kB     00:00    ",
+        "CentOS Stream 9 - AppStream                     7.2 kB/s | 4.5 kB     00:00    ",
+        "CentOS Stream 9 - Extras packages                10 kB/s | 5.1 kB     00:00    ",
+        "Rancher K3s Common (stable)                     6.6 kB/s | 2.9 kB     00:00    ",
+        "Dependencies resolved.",
+        "================================================================================",
+        " Package            Arch    Version            Repository                  Size",
+        "================================================================================",
+        "Installing:",
+        " k3s-selinux        noarch  1.4-1.el9          rancher-k3s-common-stable   21 k",
+        "Installing dependencies:",
+        " container-selinux  noarch  3:2.224.0-1.el9    appstream                   55 k",
+        "",
+        "Transaction Summary",
+        "================================================================================",
+        "Install  2 Packages",
+        "",
+        "Total download size: 76 k",
+        "Installed size: 162 k",
+        "Downloading Packages:",
+        "(1/2): container-selinux-2.224.0-1.el9.noarch.r 352 kB/s |  55 kB     00:00    ",
+        "(2/2): k3s-selinux-1.4-1.el9.noarch.rpm          37 kB/s |  21 kB     00:00    ",
+        "--------------------------------------------------------------------------------",
+        "Total                                            64 kB/s |  76 kB     00:01     ",
+        "Running transaction check",
+        "Transaction check succeeded.",
+        "Running transaction test",
+        "Transaction test succeeded.",
+        "Running transaction",
+        "  Preparing        :                                                        1/1 ",
+        "  Running scriptlet: container-selinux-3:2.224.0-1.el9.noarch               1/2 ",
+        "  Installing       : container-selinux-3:2.224.0-1.el9.noarch               1/2 ",
+        "  Running scriptlet: container-selinux-3:2.224.0-1.el9.noarch               1/2 ",
+        "  Running scriptlet: k3s-selinux-1.4-1.el9.noarch                           2/2 ",
+        "  Installing       : k3s-selinux-1.4-1.el9.noarch                           2/2 ",
+        "  Running scriptlet: k3s-selinux-1.4-1.el9.noarch                           2/2 ",
+        "  Running scriptlet: container-selinux-3:2.224.0-1.el9.noarch               2/2 ",
+        "  Running scriptlet: k3s-selinux-1.4-1.el9.noarch                           2/2 ",
+        "  Verifying        : container-selinux-3:2.224.0-1.el9.noarch               1/2 ",
+        "  Verifying        : k3s-selinux-1.4-1.el9.noarch                           2/2 ",
+        "",
+        "Installed:",
+        "  container-selinux-3:2.224.0-1.el9.noarch     k3s-selinux-1.4-1.el9.noarch    ",
+        "",
+        "Complete!",
+        "[INFO]  Creating /usr/local/bin/kubectl symlink to k3s",
+        "[INFO]  Creating /usr/local/bin/crictl symlink to k3s",
+        "[INFO]  Creating /usr/local/bin/ctr symlink to k3s",
+        "[INFO]  Creating killall script /usr/local/bin/k3s-killall.sh",
+        "[INFO]  Creating uninstall script /usr/local/bin/k3s-uninstall.sh",
+        "[INFO]  env: Creating environment file /etc/systemd/system/k3s.service.env",
+        "[INFO]  systemd: Creating service file /etc/systemd/system/k3s.service",
+        "[INFO]  systemd: Enabling k3s unit",
+        "[INFO]  Host iptables-save/iptables-restore tools not found",
+        "[INFO]  Host ip6tables-save/ip6tables-restore tools not found",
+        "[INFO]  systemd: Starting k3s"
+    ]
+}
+2023-11-19 23:11:37,164 p=11517 u=hattori n=ansible | TASK [install_k3s : ensure k3s is up and running] **************************************************************************************************************************************
+2023-11-19 23:11:37,814 p=11517 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:11:37,819 p=11517 u=hattori n=ansible | TASK [install_rook : install rook] *****************************************************************************************************************************************************
+2023-11-19 23:11:37,838 p=11517 u=hattori n=ansible | included: /home/hattori/DockerCompose_works/k3s_single_node_test_environment/roles/install_rook/tasks/install_rook.yml for lab04-k3s
+2023-11-19 23:11:37,842 p=11517 u=hattori n=ansible | TASK [install_rook : git checkout] *****************************************************************************************************************************************************
+2023-11-19 23:11:38,442 p=11517 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:11:38,446 p=11517 u=hattori n=ansible | TASK [install_rook : ensure k3s is up and running] *************************************************************************************************************************************
+2023-11-19 23:11:38,842 p=11517 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:11:38,845 p=11517 u=hattori n=ansible | TASK [install_rook : ensure k8s is up and running] *************************************************************************************************************************************
+2023-11-19 23:11:39,420 p=11517 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:11:39,425 p=11517 u=hattori n=ansible | TASK [install_rook : check ceph operator exists] ***************************************************************************************************************************************
+2023-11-19 23:11:39,820 p=11517 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:11:39,823 p=11517 u=hattori n=ansible | TASK [install_rook : create crds, common, operator] ************************************************************************************************************************************
+2023-11-19 23:11:42,724 p=11517 u=hattori n=ansible | changed: [lab04-k3s]
+2023-11-19 23:11:42,727 p=11517 u=hattori n=ansible | TASK [install_rook : wait till operator is up and running] *****************************************************************************************************************************
+2023-11-19 23:13:30,745 p=11517 u=hattori n=ansible | changed: [lab04-k3s]
+2023-11-19 23:13:30,749 p=11517 u=hattori n=ansible | TASK [install_rook : check ceph cluster pods exist] ************************************************************************************************************************************
+2023-11-19 23:13:31,186 p=11517 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:13:31,190 p=11517 u=hattori n=ansible | TASK [install_rook : create ceph cluster] **********************************************************************************************************************************************
+2023-11-19 23:13:32,631 p=11517 u=hattori n=ansible | changed: [lab04-k3s]
+2023-11-19 23:13:32,634 p=11517 u=hattori n=ansible | TASK [install_rook : wait till ceph cluster is up and running] *************************************************************************************************************************
+2023-11-19 23:16:58,263 p=11517 u=hattori n=ansible | changed: [lab04-k3s]
+2023-11-19 23:16:58,265 p=11517 u=hattori n=ansible | TASK [install_rook : check toolbox exists] *********************************************************************************************************************************************
+2023-11-19 23:16:58,637 p=11517 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:16:58,640 p=11517 u=hattori n=ansible | TASK [install_rook : install toolbox] **************************************************************************************************************************************************
+2023-11-19 23:16:59,350 p=11517 u=hattori n=ansible | changed: [lab04-k3s]
+2023-11-19 23:16:59,355 p=11517 u=hattori n=ansible | TASK [install_rook : wait till toolbox is up and running] ******************************************************************************************************************************
+2023-11-19 23:18:02,346 p=11517 u=hattori n=ansible | changed: [lab04-k3s]
+2023-11-19 23:18:02,356 p=11517 u=hattori n=ansible | PLAY RECAP *****************************************************************************************************************************************************************************
+2023-11-19 23:18:02,356 p=11517 u=hattori n=ansible | lab04-k3s                  : ok=20   changed=7    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2023-11-19 23:34:32,303 p=57340 u=hattori n=ansible | PLAY [k3s] *****************************************************************************************************************************************************************************
+2023-11-19 23:34:32,329 p=57340 u=hattori n=ansible | TASK [install_k3s : install k3s] *******************************************************************************************************************************************************
+2023-11-19 23:34:32,345 p=57340 u=hattori n=ansible | included: /home/hattori/DockerCompose_works/k3s_single_node_test_environment/roles/install_k3s/tasks/install_k3s.yml for lab04-k3s
+2023-11-19 23:34:32,349 p=57340 u=hattori n=ansible | TASK [install_k3s : put selinux in permissive] *****************************************************************************************************************************************
+2023-11-19 23:34:33,410 p=57340 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:34:33,414 p=57340 u=hattori n=ansible | TASK [install_k3s : check that /usr/local/bin/k3s exists] ******************************************************************************************************************************
+2023-11-19 23:34:33,774 p=57340 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:34:33,777 p=57340 u=hattori n=ansible | TASK [install_k3s : download install script] *******************************************************************************************************************************************
+2023-11-19 23:34:35,096 p=57340 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:34:35,099 p=57340 u=hattori n=ansible | TASK [install_k3s : install k3s] *******************************************************************************************************************************************************
+2023-11-19 23:34:35,109 p=57340 u=hattori n=ansible | skipping: [lab04-k3s]
+2023-11-19 23:34:35,112 p=57340 u=hattori n=ansible | TASK [install_k3s : install k3s without service lb] ************************************************************************************************************************************
+2023-11-19 23:35:17,648 p=57340 u=hattori n=ansible | changed: [lab04-k3s]
+2023-11-19 23:35:17,652 p=57340 u=hattori n=ansible | TASK [install_k3s : dump output] *******************************************************************************************************************************************************
+2023-11-19 23:35:17,667 p=57340 u=hattori n=ansible | ok: [lab04-k3s] => {
+    "msg": [
+        "[INFO]  Finding release for channel stable",
+        "[INFO]  Using v1.27.7+k3s2 as release",
+        "[INFO]  Downloading hash https://github.com/k3s-io/k3s/releases/download/v1.27.7+k3s2/sha256sum-amd64.txt",
+        "[INFO]  Downloading binary https://github.com/k3s-io/k3s/releases/download/v1.27.7+k3s2/k3s",
+        "[INFO]  Verifying binary download",
+        "[INFO]  Installing k3s to /usr/local/bin/k3s",
+        "[INFO]  Finding available k3s-selinux versions",
+        "Rancher K3s Common (stable)                     8.2 kB/s | 2.9 kB     00:00    ",
+        "Dependencies resolved.",
+        "================================================================================",
+        " Package            Arch    Version            Repository                  Size",
+        "================================================================================",
+        "Installing:",
+        " k3s-selinux        noarch  1.4-1.el9          rancher-k3s-common-stable   21 k",
+        "Installing dependencies:",
+        " container-selinux  noarch  3:2.224.0-1.el9    appstream                   55 k",
+        "",
+        "Transaction Summary",
+        "================================================================================",
+        "Install  2 Packages",
+        "",
+        "Total download size: 76 k",
+        "Installed size: 162 k",
+        "Downloading Packages:",
+        "(1/2): container-selinux-2.224.0-1.el9.noarch.r 256 kB/s |  55 kB     00:00    ",
+        "(2/2): k3s-selinux-1.4-1.el9.noarch.rpm          31 kB/s |  21 kB     00:00    ",
+        "--------------------------------------------------------------------------------",
+        "Total                                            58 kB/s |  76 kB     00:01     ",
+        "Running transaction check",
+        "Transaction check succeeded.",
+        "Running transaction test",
+        "Transaction test succeeded.",
+        "Running transaction",
+        "  Preparing        :                                                        1/1 ",
+        "  Running scriptlet: container-selinux-3:2.224.0-1.el9.noarch               1/2 ",
+        "  Installing       : container-selinux-3:2.224.0-1.el9.noarch               1/2 ",
+        "  Running scriptlet: container-selinux-3:2.224.0-1.el9.noarch               1/2 ",
+        "  Running scriptlet: k3s-selinux-1.4-1.el9.noarch                           2/2 ",
+        "  Installing       : k3s-selinux-1.4-1.el9.noarch                           2/2 ",
+        "  Running scriptlet: k3s-selinux-1.4-1.el9.noarch                           2/2 ",
+        "  Running scriptlet: container-selinux-3:2.224.0-1.el9.noarch               2/2 ",
+        "  Running scriptlet: k3s-selinux-1.4-1.el9.noarch                           2/2 ",
+        "  Verifying        : container-selinux-3:2.224.0-1.el9.noarch               1/2 ",
+        "  Verifying        : k3s-selinux-1.4-1.el9.noarch                           2/2 ",
+        "",
+        "Installed:",
+        "  container-selinux-3:2.224.0-1.el9.noarch     k3s-selinux-1.4-1.el9.noarch    ",
+        "",
+        "Complete!",
+        "[INFO]  Creating /usr/local/bin/kubectl symlink to k3s",
+        "[INFO]  Creating /usr/local/bin/crictl symlink to k3s",
+        "[INFO]  Creating /usr/local/bin/ctr symlink to k3s",
+        "[INFO]  Creating killall script /usr/local/bin/k3s-killall.sh",
+        "[INFO]  Creating uninstall script /usr/local/bin/k3s-uninstall.sh",
+        "[INFO]  env: Creating environment file /etc/systemd/system/k3s.service.env",
+        "[INFO]  systemd: Creating service file /etc/systemd/system/k3s.service",
+        "[INFO]  systemd: Enabling k3s unit",
+        "[INFO]  Host iptables-save/iptables-restore tools not found",
+        "[INFO]  Host ip6tables-save/ip6tables-restore tools not found",
+        "[INFO]  systemd: Starting k3s"
+    ]
+}
+2023-11-19 23:35:17,670 p=57340 u=hattori n=ansible | TASK [install_k3s : ensure k3s is up and running] **************************************************************************************************************************************
+2023-11-19 23:35:18,240 p=57340 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:35:18,247 p=57340 u=hattori n=ansible | TASK [install_rook : install rook] *****************************************************************************************************************************************************
+2023-11-19 23:35:18,272 p=57340 u=hattori n=ansible | included: /home/hattori/DockerCompose_works/k3s_single_node_test_environment/roles/install_rook/tasks/install_rook.yml for lab04-k3s
+2023-11-19 23:35:18,279 p=57340 u=hattori n=ansible | TASK [install_rook : git checkout] *****************************************************************************************************************************************************
+2023-11-19 23:35:18,689 p=57340 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:35:18,692 p=57340 u=hattori n=ansible | TASK [install_rook : ensure k3s is up and running] *************************************************************************************************************************************
+2023-11-19 23:35:19,087 p=57340 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:35:19,090 p=57340 u=hattori n=ansible | TASK [install_rook : ensure k8s is up and running] *************************************************************************************************************************************
+2023-11-19 23:35:19,629 p=57340 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:35:19,632 p=57340 u=hattori n=ansible | TASK [install_rook : check ceph operator exists] ***************************************************************************************************************************************
+2023-11-19 23:35:19,985 p=57340 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:35:19,989 p=57340 u=hattori n=ansible | TASK [install_rook : cusure /var/lib/rook dose not exist] ******************************************************************************************************************************
+2023-11-19 23:35:20,394 p=57340 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:35:20,399 p=57340 u=hattori n=ansible | TASK [install_rook : create crds, common, operator] ************************************************************************************************************************************
+2023-11-19 23:35:23,710 p=57340 u=hattori n=ansible | changed: [lab04-k3s]
+2023-11-19 23:35:23,714 p=57340 u=hattori n=ansible | TASK [install_rook : wait till operator is up and running] *****************************************************************************************************************************
+2023-11-19 23:37:11,357 p=57340 u=hattori n=ansible | changed: [lab04-k3s]
+2023-11-19 23:37:11,360 p=57340 u=hattori n=ansible | TASK [install_rook : check ceph cluster pods exist] ************************************************************************************************************************************
+2023-11-19 23:37:11,713 p=57340 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:37:11,716 p=57340 u=hattori n=ansible | TASK [install_rook : create ceph cluster] **********************************************************************************************************************************************
+2023-11-19 23:37:12,682 p=57340 u=hattori n=ansible | changed: [lab04-k3s]
+2023-11-19 23:37:12,685 p=57340 u=hattori n=ansible | TASK [install_rook : wait till ceph cluster is up and running] *************************************************************************************************************************
+2023-11-19 23:40:23,184 p=57340 u=hattori n=ansible | changed: [lab04-k3s]
+2023-11-19 23:40:23,187 p=57340 u=hattori n=ansible | TASK [install_rook : check toolbox exists] *********************************************************************************************************************************************
+2023-11-19 23:40:23,562 p=57340 u=hattori n=ansible | ok: [lab04-k3s]
+2023-11-19 23:40:23,565 p=57340 u=hattori n=ansible | TASK [install_rook : install toolbox] **************************************************************************************************************************************************
+2023-11-19 23:40:24,077 p=57340 u=hattori n=ansible | changed: [lab04-k3s]
+2023-11-19 23:40:24,080 p=57340 u=hattori n=ansible | TASK [install_rook : wait till toolbox is up and running] ******************************************************************************************************************************
+2023-11-19 23:41:28,152 p=57340 u=hattori n=ansible | changed: [lab04-k3s]
+2023-11-19 23:41:28,162 p=57340 u=hattori n=ansible | PLAY RECAP *****************************************************************************************************************************************************************************
+2023-11-19 23:41:28,163 p=57340 u=hattori n=ansible | lab04-k3s                  : ok=21   changed=7    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
