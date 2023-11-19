@@ -8,3 +8,8 @@
   ansible.builtin.include_tasks:
     file: create_block_storage.yml
   when: create_block_storage
+
+- name: create shared filesystem
+  ansible.builtin.include_tasks:
+    file: create_shared_filesystem.yml
+  when: create_shared_filesystem
