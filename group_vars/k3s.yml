@@ -8,10 +8,6 @@ install_rook: true
 create_block_storage: true
 create_shared_filesystem: true
 
-# default false
-install_kustomize: true
-kustomize_install_dir: /root
-
 # install metallb. default false
 install_metallb: true
 metallb_version: v0.13.12

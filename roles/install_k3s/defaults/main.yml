@@ -1,3 +1,4 @@
 ---
 # defaults file for install_k3s
 disable_service_lb: false
+kubectl_completion_file: /etc/bash_completion.d/kubectl

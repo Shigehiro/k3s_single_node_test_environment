@@ -61,3 +61,18 @@
   ansible.builtin.systemd:
     state: started
     name: k3s.service
+
+- name: install bash-completion for kubectl auto completion
+  ansible.builtin.dnf:
+    name: bash-completion
+    state: present
+
+- name: check if auto completion file for kubectl exists
+  ansible.builtin.stat:
+    path: "{{ kubectl_completion_file }}"
+  register: kubectl_stat
+
+- name: enable auto completion for kubectl
+  ansible.builtin.shell:
+    cmd: kubectl completion bash | sudo tee {{ kubectl_completion_file }} > /dev/null
+  when: not kubectl_stat.stat.exists
