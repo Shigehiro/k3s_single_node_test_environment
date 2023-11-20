@@ -5,6 +5,7 @@
   - [Tested environment](#tested-environment)
   - [MetalLB test](#metallb-test)
   - [Rook test](#rook-test)
+  - [Uninstall k3s](#uninstall-k3s)
 
 ## Description
 
@@ -128,4 +129,24 @@ kubectl get pvc
 NAME             STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS      AGE
 mysql-pv-claim   Bound    pvc-1140df78-1c63-4ac8-a09b-d991ae4cc9b9   20Gi       RWO            rook-ceph-block   2m46s
 wp-pv-claim      Bound    pvc-a211b752-f858-4acc-ab8a-a730709829be   20Gi       RWO            rook-ceph-block   2m42s
+```
+
+## Uninstall k3s
+
+```shell
+k3s-killall.sh 
+```
+
+```shell
+k3s-uninstall.sh
+```
+
+<br>If you have installed Rook, do the followings.
+```text
+rm -rf /var/lib/rook
+```
+
+<br>Wipefs the block deivce for Rook
+```shell
+wipefs -af /dev/vdb 
 ```
