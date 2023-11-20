@@ -1,3 +1,5 @@
 ---
 # defaults file for install_kustomize
 install_kustomize: false
+kustomize_install_dir: /root
+

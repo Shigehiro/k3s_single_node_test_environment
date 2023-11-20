@@ -1,0 +1,21 @@
+---
+- name: check if kustomize exists under {{ kustomize_install_dir }}
+  ansible.builtin.stat:
+    path: "{{ kustomize_install_dir }}/kustomize"
+  register: stat_result
+
+- name: install kustomize
+  block:
+  - name: download install script
+    ansible.builtin.get_url:
+      url: https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh
+      dest: "{{ kustomize_install_dir }}/install_kustomize.sh"
+      mode: '0744'
+      validate_certs: false
+
+  - name: install kustomize
+    ansible.builtin.command:
+      cmd: "{{ kustomize_install_dir }}/install_kustomize.sh"
+    register: output
+    failed_when: output.rc | int != 0
+  when: not stat_result.stat.exists
