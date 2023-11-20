@@ -23,7 +23,23 @@
     ansible.builtin.command:
       cmd: /root/install_k3s.sh
     register: output
-    when: not disable_service_lb
+    failed_when: output.rc | int != 0
+
+  - name: dump result 
+    ansible.builtin.debug:
+      msg: "{{ output.stdout }}"
+  when: 
+  - not disable_service_lb
+  - not stat_result.stat.exists
+
+- name: install k3s without service lb
+  block:
+  - name: download install script
+    ansible.builtin.get_url:
+      url: https://get.k3s.io
+      dest: /root/install_k3s.sh
+      mode: '0744'
+      validate_certs: false
 
   - name: install k3s without service lb
     ansible.builtin.command:
@@ -31,12 +47,15 @@
     environment:
       INSTALL_K3S_EXEC: "--disable servicelb" 
     register: output
+    failed_when: output.rc | int != 0
     when: disable_service_lb
 
-  - name: dump output
+  - name: dump result 
     ansible.builtin.debug:
-      msg: "{{ output.stdout_lines }}"
-  when: not stat_result.stat.exists
+      msg: "{{ output.stdout }}"
+  when: 
+  - disable_service_lb
+  - not stat_result.stat.exists
 
 - name: ensure k3s is up and running
   ansible.builtin.systemd:

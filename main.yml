@@ -19,4 +19,8 @@
   - name: install metallb
     ansible.builtin.import_role:
       name: install_metallb
-    when: install_metallb
+    when: 
+    - install_kustomize
+    - install_metallb
+    - not disable_service_lb
+
