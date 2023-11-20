@@ -10,3 +10,9 @@ create_shared_filesystem: true
 
 # default false
 install_kustomize: true
+
+# install metallb. default false
+install_metallb: true
+metallb_version: v0.13.12
+metallb_customize_dir: /root/metallb_kustomize
+metallb_address_range: 192.168.126.50-192.168.126.80

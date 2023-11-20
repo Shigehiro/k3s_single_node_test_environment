@@ -14,4 +14,9 @@
   - name: install kustomize
     ansible.builtin.import_role:
       name: install_kustomize
-    when: install_kuustomize
+    when: install_kustomize
+
+  - name: install metallb
+    ansible.builtin.import_role:
+      name: install_metallb
+    when: install_metallb

@@ -1,0 +1,41 @@
+---
+- name: create a {{ metallb_customize_dir }} if it does not exist
+  ansible.builtin.file:
+    path: "{{ metallb_customize_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: create a {{ metallb_customize_dir }}/configs if it does not exist
+  ansible.builtin.file:
+    path: "{{ metallb_customize_dir }}/configs"
+    state: directory
+    mode: '0755'
+
+- name: template a file to {{ metallb_customize_dir }}/kustomization.yaml
+  ansible.builtin.template:
+    src: kustomization.yaml.j2
+    dest: "{{ metallb_customize_dir }}/kustomization.yaml"
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: template a file to {{ metallb_customize_dir }}/configs/config
+  ansible.builtin.template:
+    src: config.j2
+    dest: "{{ metallb_customize_dir }}/configs/config"
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: check
+  ansible.builtin.shell:
+    cmd: kubectl get po -n metallb-system |grep -E 'controller|speaker' -c
+  register: metallb_out
+  ignore_errors: true
+  failed_when: false
+  changed_when: false
+
+- name: deploy metallb
+  ansible.builtin.command:
+    cmd: kubectl apply -k {{ metallb_customize_dir }}
+  when: "metallb_out.stdout | int ==0"
