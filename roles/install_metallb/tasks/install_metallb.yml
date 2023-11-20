@@ -1,33 +1,43 @@
 ---
-- name: create a {{ metallb_customize_dir }} if it does not exist
-  ansible.builtin.file:
-    path: "{{ metallb_customize_dir }}"
-    state: directory
-    mode: '0755'
+- name: check {{ metallb_kustomize_dir }} exists
+  ansible.builtin.stat:
+    path: "{{ metallb_kustomize_dir }}"
+  register: dir_output
 
-- name: create a {{ metallb_customize_dir }}/configs if it does not exist
+- name: create {{ metallb_kustomize_dir }}
   ansible.builtin.file:
-    path: "{{ metallb_customize_dir }}/configs"
+    path: "{{ metallb_kustomize_dir }}"
     state: directory
-    mode: '0755'
+  when: not dir_output.stat.exists
 
-- name: template a file to {{ metallb_customize_dir }}/kustomization.yaml
+- name: check {{ metallb_kustomize_dir }}/configs exists
+  ansible.builtin.stat:
+    path: "{{ metallb_kustomize_dir }}/configs"
+  register: dir_configs_output
+
+- name: create {{ metallb_kustomize_dir }}/configs
+  ansible.builtin.file:
+    path: "{{ metallb_kustomize_dir }}/configs"
+    state: directory
+  when: not dir_configs_output.stat.exists
+
+- name: copy a templete kustomization.yaml to {{ metallb_kustomize_dir }}
   ansible.builtin.template:
     src: kustomization.yaml.j2
-    dest: "{{ metallb_customize_dir }}/kustomization.yaml"
-    owner: root
+    dest: "{{ metallb_kustomize_dir }}/kustomization.yaml"
+    owner: root 
     group: root
     mode: '0644'
 
-- name: template a file to {{ metallb_customize_dir }}/configs/config
+- name: copy a templete config to {{ metallb_kustomize_dir }}/configs
   ansible.builtin.template:
     src: config.j2
-    dest: "{{ metallb_customize_dir }}/configs/config"
-    owner: root
+    dest: "{{ metallb_kustomize_dir }}/configs/config.yaml"
+    owner: root 
     group: root
     mode: '0644'
 
-- name: check
+- name: check metallb exists
   ansible.builtin.shell:
     cmd: kubectl get po -n metallb-system |grep -E 'controller|speaker' -c
   register: metallb_out
@@ -35,7 +45,32 @@
   failed_when: false
   changed_when: false
 
-- name: deploy metallb
+- name: install metallb
   ansible.builtin.command:
-    cmd: kubectl apply -k {{ metallb_customize_dir }}
-  when: "metallb_out.stdout | int ==0"
+    cmd: "kubectl apply -k {{ metallb_kustomize_dir }}"
+  when: "metallb_out.stdout|int == 0"
+  register: result
+  failed_when: "result.rc|int != 0"
+
+- name: wait till metallb is up and running
+  ansible.builtin.shell:
+    cmd: kubectl get po -n metallb-system |grep -E 'controller|speaker' | grep Running -c
+  register: metallb_state
+  until: metallb_state.stdout | int >= 2
+  retries: 10
+  delay: 20
+
+- name: check if {{ pool_name }} exists in ipaddresspools.metallb.io
+  ansible.builtin.shell:
+    cmd: "kubectl get -n metallb-system ipaddresspools.metallb.io |grep {{ pool_name }} -c"
+  register: pool_out
+  ignore_errors: true
+  failed_when: false
+  changed_when: false
+
+- name: create address pool
+  ansible.builtin.command:
+    cmd: "kubectl apply -f {{ metallb_kustomize_dir }}/configs/config.yaml"
+  register: result
+  failed_when: "result.rc|int != 0"
+  when: "pool_out.stdout|int != 1"

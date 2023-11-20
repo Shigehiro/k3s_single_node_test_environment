@@ -97,4 +97,3 @@
     retries: 30
     delay: 10
   when: "ceph_toolbox.stdout | int == 0"
-

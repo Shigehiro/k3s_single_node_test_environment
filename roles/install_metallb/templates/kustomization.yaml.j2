@@ -1,15 +1,6 @@
 # MetalLB setup
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
 namespace: metallb-system
-
 resources:
 - github.com/metallb/metallb/config/native?ref={{ metallb_version }}
-
-configMapGenerator:
-- name: config
-  files:
-  - configs/config
-  options:
-    disableNameSuffixHash: true

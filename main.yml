@@ -22,5 +22,5 @@
     when: 
     - install_kustomize
     - install_metallb
-    - not disable_service_lb
+    - disable_service_lb
 
