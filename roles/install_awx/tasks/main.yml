@@ -1,0 +1,6 @@
+---
+# tasks file for install_awx
+- name: install awx
+  ansible.builtin.include_tasks:
+    file: install_awx.yml
+

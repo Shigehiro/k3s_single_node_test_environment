@@ -5,6 +5,7 @@
   - [Tested environment](#tested-environment)
   - [MetalLB test](#metallb-test)
   - [Rook test](#rook-test)
+  - [AWX](#awx)
   - [Uninstall k3s](#uninstall-k3s)
 
 ## Description
@@ -130,6 +131,25 @@ NAME             STATUS   VOLUME                                     CAPACITY   
 mysql-pv-claim   Bound    pvc-1140df78-1c63-4ac8-a09b-d991ae4cc9b9   20Gi       RWO            rook-ceph-block   2m46s
 wp-pv-claim      Bound    pvc-a211b752-f858-4acc-ab8a-a730709829be   20Gi       RWO            rook-ceph-block   2m42s
 ```
+
+## AWX
+
+[Installation Reference](https://ansible.readthedocs.io/projects/awx-operator/en/latest/installation/basic-install.html)
+
+<br>Check the port number
+```
+# kubectl get service -n awx 
+NAME                                              TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+awx-operator-controller-manager-metrics-service   ClusterIP   10.43.214.109   <none>        8443/TCP       33m
+awx-demo-postgres-13                              ClusterIP   None            <none>        5432/TCP       7m1s
+awx-demo-service                                  NodePort    10.43.230.70    <none>        80:31470/TCP   5m59s
+```
+
+<br>Get the credentials of a user admin
+```text
+kubectl get secrets -n awx awx-demo-admin-password -o jsonpath="{.data.password}" | base64 --decode ; echo
+```
+Open the browser and access to the `http//[K3 host ip]:31470`
 
 ## Uninstall k3s
 

@@ -9,18 +9,18 @@
   - name: install k3s
     ansible.builtin.import_role:
       name: install_rook
-    when: install_rook
-
-#  - name: install kustomize
-#    ansible.builtin.import_role:
-#      name: install_kustomize
-#    when: install_kustomize
+    when: 
+    - install_rook
 
   - name: install metallb
     ansible.builtin.import_role:
       name: install_metallb
     when: 
-#    - install_kustomize
     - install_metallb
     - disable_service_lb
 
+  - name: install awx
+    ansible.builtin.import_role:
+      name: install_awx
+    when: 
+    - install_awx

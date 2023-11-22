@@ -1,0 +1,91 @@
+---
+- name: check {{ awx_kustomize_dir }} exists
+  ansible.builtin.stat:
+    path: "{{ awx_kustomize_dir }}"
+  register: dir_output
+
+- name: create {{ awx_kustomize_dir }}
+  ansible.builtin.file:
+    path: "{{ awx_kustomize_dir }}"
+    state: directory
+  when: not dir_output.stat.exists
+
+- name: check {{ awx_kustomize_dir }}/configs exists
+  ansible.builtin.stat:
+    path: "{{ awx_kustomize_dir }}/configs"
+  register: dir_configs_output
+
+- name: create {{ awx_kustomize_dir }}/configs
+  ansible.builtin.file:
+    path: "{{ awx_kustomize_dir }}/configs"
+    state: directory
+  when: not dir_configs_output.stat.exists
+
+- name: copy a templete kustomization.yaml to {{ awx_kustomize_dir }}
+  ansible.builtin.template:
+    src: kustomization.yaml.j2
+    dest: "{{ awx_kustomize_dir }}/kustomization.yaml"
+    owner: root 
+    group: root
+    mode: '0644'
+
+- name: copy a templete config to {{ awx_kustomize_dir }}/configs
+  ansible.builtin.template:
+    src: awx-demo.yaml.j2
+    dest: "{{ awx_kustomize_dir }}/configs/awx-demo.yaml"
+    owner: root 
+    group: root
+    mode: '0644'
+
+- name: check awx operator exists
+  ansible.builtin.shell:
+    cmd: kubectl get po -n awx |grep awx-operator-controller-manager -c
+  register: awx_out
+  ignore_errors: true
+  failed_when: false
+  changed_when: false
+
+- name: install awx operator
+  ansible.builtin.command:
+    cmd: "kubectl apply -k {{ awx_kustomize_dir }}"
+  when: "awx_out.stdout|int == 0"
+  register: result
+  failed_when: "result.rc|int != 0"
+
+- name: wait till awx operator is up and running
+  ansible.builtin.shell:
+    cmd: "kubectl get po -n awx |grep awx-operator-controller-manager | grep -c Running"
+  register: awx_state
+  until: awx_state.stdout | int >= 1
+  retries: 10
+  delay: 20
+
+- name: check awx instance {{ awx_instance_name }} exists
+  ansible.builtin.shell:
+    cmd: "kubectl get po -n awx | grep {{ awx_instance_name }} -c"
+  register: awx_instance_out
+  ignore_errors: true
+  failed_when: false
+  changed_when: false
+
+- name: install awx instance 
+  block:
+  - name: remove kustomization.yaml
+    ansible.builtin.file:
+      path: "{{ awx_kustomize_dir }}/kustomization.yaml"
+      state: absent
+  - name: copy a templete kustomization.yaml to {{ awx_kustomize_dir }}
+    ansible.builtin.template:
+      src: kustomization_awx_instance.yaml.j2
+      dest: "{{ awx_kustomize_dir }}/kustomization.yaml"
+      owner: root 
+      group: root
+      mode: '0644'
+  - name: install awx instance
+    ansible.builtin.command:
+      cmd: "kubectl apply -k {{ awx_kustomize_dir }}"
+    register: result
+    failed_when: "result.rc|int != 0"
+  when: 
+  - awx_state.stdout|int >= 1
+  - awx_instance_out|int >= 1

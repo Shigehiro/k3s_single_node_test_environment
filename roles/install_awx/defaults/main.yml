@@ -1,0 +1,4 @@
+---
+# defaults file for install_awx
+install_awx: false
+awx_instance_name: awx-demo
