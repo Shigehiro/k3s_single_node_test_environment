@@ -26,6 +26,7 @@ CentOS Stream 9 running under KVM
 - Memory 16GB
 - /dev/vda(60GB), /dev/vdb(60GB)
 - single vNIC
+- SELinux: Permissve
 
 ## MetalLB test
 
@@ -113,7 +114,6 @@ MIN/MAX VAR: 1.00/1.00  STDDEV: 0
 <br>Try [this](https://github.com/rook/rook/tree/master/deploy/examples)
 ```text
 kubectl apply -f mysql.yaml 
-
 kubectl apply -f wordpress.yaml 
 ```
 
@@ -134,7 +134,7 @@ wp-pv-claim      Bound    pvc-a211b752-f858-4acc-ab8a-a730709829be   20Gi       
 
 ## AWX
 
-[Installation Reference](https://ansible.readthedocs.io/projects/awx-operator/en/latest/installation/basic-install.html)
+[Installation Guide](https://ansible.readthedocs.io/projects/awx-operator/en/latest/installation/basic-install.html)
 
 <br>Check the port number
 ```
