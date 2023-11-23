@@ -1,0 +1,3 @@
+---
+# defaults file for install_gitea
+install_gitea: false

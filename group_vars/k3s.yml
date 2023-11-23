@@ -2,7 +2,7 @@
 disable_service_lb: true
 
 # default false
-install_rook: true
+install_rook: false
 
 # default true. make sure install_rook is true
 create_block_storage: true
@@ -15,6 +15,9 @@ metallb_kustomize_dir: /root/metallb_kustomize
 metallb_address_range: 192.168.126.50-192.168.126.80
 
 # install awx. default false
-install_awx: true
+install_awx: false
 awx_version: 2.8.0
 awx_kustomize_dir: /root/awx_kustomize
+
+# install gitea
+install_gitea: true

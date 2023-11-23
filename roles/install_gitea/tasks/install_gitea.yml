@@ -1,0 +1,43 @@
+---
+- name: check if helm installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/helm
+  register: helm_stat
+
+- name: download install script for helm
+  block:
+  - name: download install script for helm
+    ansible.builtin.get_url:
+      url: https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+      dest: /root/install_helm.sh
+      mode: '0744'
+      validate_certs: false
+
+  - name: install helm
+    ansible.builtin.command:
+      cmd: /root/install_helm.sh
+    register: result
+    failed_when: result.rc|int != 0
+  when: not helm_stat.stat.exists 
+
+- name: check if gitea is up and rnning
+  ansible.builtin.shell:
+    cmd: kubectl get pod | grep gitea -c
+  register: gitea_out
+  ignore_errors: true
+  changed_when: false
+  failed_when: false
+
+- name: install gitea
+  block:
+  - name: add helm repo of gitea
+    ansible.builtin.command:
+      cmd: helm repo add gitea-charts https://dl.gitea.com/charts/ --insecure-skip-tls-verify
+
+  - name: install gitea
+    ansible.builtin.command:
+      #cmd: helm install -f myvalues.yaml gitea gitea-charts/gitea
+      cmd: helm install gitea gitea-charts/gitea
+    environment:
+      KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+  when: "gitea_out.stdout|int == 0"
