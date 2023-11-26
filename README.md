@@ -6,6 +6,7 @@
   - [MetalLB test](#metallb-test)
   - [Rook test](#rook-test)
   - [AWX](#awx)
+  - [Gitea](#gitea)
   - [Uninstall k3s](#uninstall-k3s)
 
 ## Description
@@ -150,6 +151,20 @@ awx-demo-service                                  NodePort    10.43.230.70    <n
 kubectl get secrets -n awx awx-demo-admin-password -o jsonpath="{.data.password}" | base64 --decode ; echo
 ```
 Open the browser and access to the `http//[K3 host ip]:31470`
+
+## Gitea
+
+Open the browser, access to `http://[k3 host ip]:30000`
+```
+# kubectl get po -l app=gitea
+NAME                     READY   STATUS    RESTARTS   AGE
+gitea-744f954f44-4xsj9   1/1     Running   0          114s
+
+# kubectl get svc -l app=gitea
+NAME         TYPE       CLUSTER-IP    EXTERNAL-IP   PORT(S)          AGE
+gitea-http   NodePort   10.43.89.28   <none>        3000:30000/TCP   2m14s
+gitea-ssh    NodePort   10.43.100.5   <none>        22:30001/TCP     2m14s
+```
 
 ## Uninstall k3s
 
