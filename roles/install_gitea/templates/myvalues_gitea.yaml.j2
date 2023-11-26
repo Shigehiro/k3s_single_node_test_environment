@@ -8,6 +8,11 @@ persistence:
   enabled: true
   storageClass: {{ storageclass }}
 gitea:
+  admin:
+    username: {{ gitea_admin_username }}
+    password: {{ gitea_admin_password }}
+    email: {{ gitea_admin_email }}
+gitea:
   config:
     database:
       DB_TYPE: sqlite3
