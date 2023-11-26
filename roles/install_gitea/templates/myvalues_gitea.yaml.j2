@@ -1,0 +1,28 @@
+redis-cluster:
+  enabled: false
+postgresql:
+  enabled: false
+postgresql-ha:
+  enabled: false
+persistence:
+  enabled: true
+  storageClass: {{ storageclass }}
+gitea:
+  config:
+    database:
+      DB_TYPE: sqlite3
+    session:
+      PROVIDER: memory
+    cache:
+      ADAPTER: memory
+    queue:
+      TYPE: level
+service:
+  http:
+    type: NodePort
+    port: 3000
+    nodePort: {{ gitea_http_nodport }}
+  ssh:
+    type: NodePort
+    port: 22
+    nodePort: {{ gitea_ssh_nodport }}

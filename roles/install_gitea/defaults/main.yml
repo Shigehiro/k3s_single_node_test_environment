@@ -1,3 +1,7 @@
 ---
 # defaults file for install_gitea
 install_gitea: false
+storageclass: local-path
+gitea_http_nodport: 30000
+gitea_ssh_nodport: 30001
+

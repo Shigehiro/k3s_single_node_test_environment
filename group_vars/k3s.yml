@@ -21,3 +21,6 @@ awx_kustomize_dir: /root/awx_kustomize
 
 # install gitea
 install_gitea: true
+storageclass: local-path
+gitea_http_nodport: 30000
+gitea_ssh_nodport: 30001

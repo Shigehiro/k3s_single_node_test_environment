@@ -30,14 +30,31 @@
 
 - name: install gitea
   block:
+  - name: copy template
+    ansible.builtin.template:
+      src: myvalues_gitea.yaml.j2 
+      dest: /root/myvalues_gitea.yaml
+      owner: root
+      group: root
+      mode: '0644'
+
   - name: add helm repo of gitea
     ansible.builtin.command:
       cmd: helm repo add gitea-charts https://dl.gitea.com/charts/ --insecure-skip-tls-verify
 
   - name: install gitea
     ansible.builtin.command:
-      #cmd: helm install -f myvalues.yaml gitea gitea-charts/gitea
-      cmd: helm install gitea gitea-charts/gitea
+      cmd: helm install -f myvalues_gitea.yaml gitea gitea-charts/gitea
     environment:
       KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+    args:
+      chdir: /root
+
+  - name: wait till gitea is up and running
+    ansible.builtin.shell:
+      cmd: kubectl get pod | grep gitea  | grep -c Running
+    register: output
+    until: output.stdout | int >= 1
+    retries: 30
+    delay: 10
   when: "gitea_out.stdout|int == 0"
