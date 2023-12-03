@@ -7,6 +7,7 @@
   - [Rook test](#rook-test)
   - [AWX](#awx)
   - [Gitea](#gitea)
+  - [Private container registry](#private-container-registry)
   - [Uninstall k3s](#uninstall-k3s)
 
 ## Description
@@ -165,6 +166,11 @@ NAME         TYPE       CLUSTER-IP    EXTERNAL-IP   PORT(S)          AGE
 gitea-http   NodePort   10.43.89.28   <none>        3000:30000/TCP   2m14s
 gitea-ssh    NodePort   10.43.100.5   <none>        22:30001/TCP     2m14s
 ```
+
+## Private container registry
+
+Referecnce:
+- [Install a Private Docker Container Registry in Kubernetes](https://blog.zachinachshon.com/docker-registry/)
 
 ## Uninstall k3s
 

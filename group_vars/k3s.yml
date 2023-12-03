@@ -20,7 +20,17 @@ awx_version: 2.8.0
 awx_kustomize_dir: /root/awx_kustomize
 
 # install gitea
-install_gitea: true
+install_gitea: false
 storageclass: local-path
 gitea_http_nodport: 30000
 gitea_ssh_nodport: 30001
+
+# docker distribution(container private registry)
+install_docker_distribution: true
+private_key_path: /root/docker_registry_private.key
+cert_pem_path: /root/docker_registry_certificate.pem
+secret_name_docker_registry: registry-secret
+pvc_name_docker_registry: pvc-registry
+docker_registry_stoage_class_name: local-path
+docekr_registry_storage_size: 5Gi
+docker_registry_pvc_yaml_path: /root/docker_registry_pvc.yaml

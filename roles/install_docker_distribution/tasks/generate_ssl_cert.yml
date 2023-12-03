@@ -1,0 +1,40 @@
+---
+- name: install required python library 
+  ansible.builtin.dnf:
+    name: python3-cryptography
+    state: present
+
+- name: Create private key (RSA, 4096 bits)
+  community.crypto.openssl_privatekey:
+    path: "{{ private_key_path }}"
+
+- name: Create certificate signing request (CSR) for self-signed certificate
+  community.crypto.openssl_csr_pipe:
+    privatekey_path: "{{ private_key_path }}"
+    common_name: test.local
+    organization_name: Test, Inc.
+    subject_alt_name:
+      - "DNS:ansible.local"
+  register: csr
+
+- name: Create self-signed certificate from CSR
+  community.crypto.x509_certificate:
+    path: "{{ cert_pem_path }}"
+    csr_content: "{{ csr.csr }}"
+    privatekey_path: "{{ private_key_path }}"
+    provider: selfsigned
+
+- name: check if a secret {{ secret_name_docker_registry }} exists
+  ansible.builtin.shell:
+    cmd: "kubectl get secrets -n default |grep -c {{ secret_name_docker_registry }}"
+  ignore_errors: true
+  failed_when: false
+  changed_when: false
+  register: secret_out
+
+- name: register ssl keys in k8s secret
+  ansible.builtin.command:
+    cmd: "kubectl create secret tls {{ secret_name_docker_registry }} --cert {{ cert_pem_path }} --key {{ private_key_path }} -n default"
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+  when: "secret_out.stdout|int == 0"

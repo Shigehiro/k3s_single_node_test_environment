@@ -1,0 +1,23 @@
+---
+- name: create pvc for docker registry
+  ansible.builtin.template:
+    src: pvc_docker_registry.yaml.j2 
+    dest: "{{ docker_registry_pvc_yaml_path }}"
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: check if pvc {{ pvc_name_docker_registry }} exists
+  ansible.builtin.shell:
+    cmd: "kubectl get pvc | grep -c {{ pvc_name_docker_registry }}"
+  ignore_errors: true
+  failed_when: false
+  changed_when: false
+  register: pvc_docker_out
+  
+- name: create pvc {{ pvc_name_docker_registry }}
+  ansible.builtin.command:
+    cmd: "kubectl apply -f {{ docker_registry_pvc_yaml_path }}"
+  environment: 
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+  when: "pvc_docker_out.stdout|int==0"

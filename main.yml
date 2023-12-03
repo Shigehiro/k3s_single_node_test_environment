@@ -24,9 +24,15 @@
 #      name: install_awx
 #    when: 
 #    - install_awx
-
-  - name: install gitea
+#
+#  - name: install gitea
+#    ansible.builtin.import_role:
+#      name: install_gitea
+#    when: 
+#    - install_gitea
+#
+  - name: install docker distribution
     ansible.builtin.import_role:
-      name: install_gitea
+      name: install_docker_distribution
     when: 
-    - install_gitea
+    - install_docker_distribution

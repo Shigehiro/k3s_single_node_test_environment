@@ -1,0 +1,11 @@
+---
+# defaults file for install_docker_distribution
+private_key_path: /root/docker_registry_private.key
+cert_pem_path: /root/docker_registry_certificate.pem
+secret_name_docker_registry: registry-secret
+
+# PVC
+pvc_name_docker_registry: pvc-registry
+docker_registry_stoage_class_name: local-path
+docekr_registry_storage_size: 5Gi
+docker_registry_pvc_yaml_path: /root/docker_registry_pvc.yaml
