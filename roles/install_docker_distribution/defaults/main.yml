@@ -9,3 +9,7 @@ pvc_name_docker_registry: pvc-registry
 docker_registry_stoage_class_name: local-path
 docekr_registry_storage_size: 5Gi
 docker_registry_pvc_yaml_path: /root/docker_registry_pvc.yaml
+docker_distribution_deployment_yaml_path: /root/docker_distribution_deployment.yaml
+docker_registry_dir: /var/lib/registry 
+docker_distribution_configmap_yaml_path: /root/configmap_docker_distribution.yml
+docker_distribution_configmap_name: docker-registry-conf

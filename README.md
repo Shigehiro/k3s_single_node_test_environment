@@ -170,8 +170,8 @@ gitea-ssh    NodePort   10.43.100.5   <none>        22:30001/TCP     2m14s
 ## Private container registry
 
 Referecnce:
-- [Install a Private Docker Container Registry in Kubernetes](https://blog.zachinachshon.com/docker-registry/)
-
+- https://github.com/docker-archive/docker-registry/tree/master/contrib/nginx
+ 
 ## Uninstall k3s
 
 ```shell

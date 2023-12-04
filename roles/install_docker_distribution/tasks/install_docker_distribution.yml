@@ -21,3 +21,49 @@
   environment: 
     KUBECONFIG: /etc/rancher/k3s/k3s.yaml
   when: "pvc_docker_out.stdout|int==0"
+
+- name: copy template for ConfigMap of doker distribution
+  ansible.builtin.template:
+    src: configmap_docker_distribution.yml.j2
+    dest: "{{ docker_distribution_configmap_yaml_path }}"
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: check if ConfigMap {{ docker_distribution_configmap_name }} exists
+  ansible.builtin.shell:
+    cmd: "kubectl get cm | grep -c {{ docker_distribution_configmap_name }}"
+  ignore_errors: true
+  failed_when: false
+  changed_when: false
+  register: cm_registry
+
+- name: create ConfigMap {{ docker_distribution_configmap_name }}
+  ansible.builtin.command:
+    cmd: "kubectl apply -f {{ docker_distribution_configmap_yaml_path }}"
+  environment: 
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+  when: "cm_registry.stdout|int==0"
+
+- name: copy template for Deployment docker distribution
+  ansible.builtin.template:
+    src: docker_distribution_deployment.yaml.j2
+    dest: "{{ docker_distribution_deployment_yaml_path }}"
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: check if Deployment registry exists
+  ansible.builtin.shell:
+    cmd: "kubectl get deployment | grep -c registry"
+  ignore_errors: true
+  failed_when: false
+  changed_when: false
+  register: deployment_registry
+
+- name: create deployment registry
+  ansible.builtin.command:
+    cmd: "kubectl apply -f {{ docker_distribution_deployment_yaml_path }}"
+  environment: 
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+  when: "deployment_registry.stdout|int==0"

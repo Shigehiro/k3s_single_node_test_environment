@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registry
+  labels:
+    app: registry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: registry
+  template:
+    metadata:
+      labels:
+        app: registry
+    spec:
+      containers:
+      - name: registry
+        image: docker.io/registry
+        command:
+        - /bin/registry
+        - serve
+        - /etc/docker/registry/config.yml
+        volumeMounts:
+        - name: {{ pvc_name_docker_registry }}
+          mountPath: {{ docker_registry_dir }}
+        - name: docker-registry-conf
+          readOnly: true
+          mountPath: /etc/docker/registry
+      volumes:
+      - name: {{ pvc_name_docker_registry }}
+        persistentVolumeClaim:
+          claimName: {{ pvc_name_docker_registry }}
+      - name: docker-registry-conf
+        configMap:
+          name: docker-registry-conf
+          items:
+          - key: config.yml
+            path: config.yml
