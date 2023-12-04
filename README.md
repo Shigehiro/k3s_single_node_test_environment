@@ -30,6 +30,8 @@ CentOS Stream 9 running under KVM
 - single vNIC
 - SELinux: Permissve
 
+<br>***Run the playbook with root user***
+
 ## MetalLB test
 
 Use [this file](./k8s_test_yaml/loadbalancer.yaml)
