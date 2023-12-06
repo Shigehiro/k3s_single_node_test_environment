@@ -13,3 +13,12 @@ docker_distribution_deployment_yaml_path: /root/docker_distribution_deployment.y
 docker_registry_dir: /var/lib/registry 
 docker_distribution_configmap_yaml_path: /root/configmap_docker_distribution.yml
 docker_distribution_configmap_name: docker-registry-conf
+
+# basic auth flat file
+htpasswd_file_path: /root/htpasswd
+basic_auth_user:
+- user: "admin"
+  pass: "admin"
+
+# allocate a port from a range 30000-32767
+docker_registry_nodeport: 30050

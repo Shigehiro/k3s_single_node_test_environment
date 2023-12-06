@@ -4,6 +4,10 @@
 #  ansible.builtin.include_tasks:
 #    file: generate_ssl_cert.yml
 
+#- name: generate htpasswd
+#  ansible.builtin.include_tasks:
+#    file: generate_htpasswd.yml
+
 - name: install docker distribution
   ansible.builtin.include_tasks:
     file: install_docker_distribution.yml
