@@ -45,13 +45,25 @@
     KUBECONFIG: /etc/rancher/k3s/k3s.yaml
   when: "cm_registry.stdout|int==0"
 
-- name: copy template for Deployment docker distribution
+- name: copy template for Deployment docker distribution(nodeport)
   ansible.builtin.template:
-    src: docker_distribution_deployment.yaml.j2
+    src: docker_distribution_deployment_nodport.yaml.j2
     dest: "{{ docker_distribution_deployment_yaml_path }}"
     owner: root
     group: root
     mode: '0644'
+  when:
+  - docker_registry_nodeport
+
+- name: copy template for Deployment docker distribution(cluster ip)
+  ansible.builtin.template:
+    src: docker_distribution_deployment_clusterip.yaml.j2
+    dest: "{{ docker_distribution_deployment_yaml_path }}"
+    owner: root
+    group: root
+    mode: '0644'
+  when:
+  - docker_registry_clusterip
 
 - name: check if Deployment registry exists
   ansible.builtin.shell:

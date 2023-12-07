@@ -22,3 +22,5 @@ basic_auth_user:
 
 # allocate a port from a range 30000-32767
 docker_registry_nodeport: 30050
+docker_registry_nodeport: false
+docker_registry_clusterip: true
