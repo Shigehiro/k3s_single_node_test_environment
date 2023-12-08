@@ -8,7 +8,10 @@
 #  ansible.builtin.include_tasks:
 #    file: generate_htpasswd.yml
 
-- name: install docker distribution
-  ansible.builtin.include_tasks:
-    file: install_docker_distribution.yml
+#- name: install docker distribution
+#  ansible.builtin.include_tasks:
+#    file: install_docker_distribution.yml
 
+- name: install nginx
+  ansible.builtin.include_tasks:
+    file: install_nginx.yml

@@ -40,7 +40,7 @@ spec:
         volumeMounts:
         - name: {{ pvc_name_docker_registry }}
           mountPath: {{ docker_registry_dir }}
-        - name: docker-registry-conf
+        - name: {{ docker_distribution_configmap_name }}
           readOnly: true
           mountPath: /etc/docker/registry
       volumes:

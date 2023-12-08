@@ -40,16 +40,17 @@ spec:
         volumeMounts:
         - name: {{ pvc_name_docker_registry }}
           mountPath: {{ docker_registry_dir }}
-        - name: docker-registry-conf
+        - name: {{ docker_distribution_configmap_name }}
           readOnly: true
           mountPath: /etc/docker/registry
       volumes:
       - name: {{ pvc_name_docker_registry }}
         persistentVolumeClaim:
           claimName: {{ pvc_name_docker_registry }}
-      - name: docker-registry-conf
+      - name: {{ docker_distribution_configmap_name }}
         configMap:
-          name: docker-registry-conf
+          # An array of keys from the ConfigMap to create as files
+          name: {{ docker_distribution_configmap_name }}
           items:
           - key: config.yml
             path: config.yml

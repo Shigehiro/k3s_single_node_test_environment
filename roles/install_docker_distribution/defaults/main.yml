@@ -1,26 +1,38 @@
 ---
-# defaults file for install_docker_distribution
+# Secret for docker distribution
 private_key_path: /root/docker_registry_private.key
 cert_pem_path: /root/docker_registry_certificate.pem
 secret_name_docker_registry: registry-secret
 
-# PVC
+# PVC for docker distribution
 pvc_name_docker_registry: pvc-registry
 docker_registry_stoage_class_name: local-path
 docekr_registry_storage_size: 5Gi
 docker_registry_pvc_yaml_path: /root/docker_registry_pvc.yaml
+
+# Deployment, ConfigMap
 docker_distribution_deployment_yaml_path: /root/docker_distribution_deployment.yaml
 docker_registry_dir: /var/lib/registry 
 docker_distribution_configmap_yaml_path: /root/configmap_docker_distribution.yml
 docker_distribution_configmap_name: docker-registry-conf
+nginx_configmap_name: nginx-conf
+nginx_configmap_yaml_path: /root/configmap_nginx_conf.yml
 
-# basic auth flat file
+# Secret for nginx
+secret_name_htpasswd: basic-auth
+
+# basic auth flat file(nginx)
 htpasswd_file_path: /root/htpasswd
 basic_auth_user:
 - user: "admin"
   pass: "admin"
 
-# allocate a port from a range 30000-32767
+# allocate a port from a range 30000-32767(docker distribution)
 docker_registry_nodeport: 30050
-docker_registry_nodeport: false
-docker_registry_clusterip: true
+use_docker_registry_nodeport: false
+use_docker_registry_clusterip: true
+
+# allocate a port from a range 30000-32767(nginx)
+nginx_registry_nodeport: 30051
+use_nginx_nodeport: true
+use_nginx_clusterip: false
