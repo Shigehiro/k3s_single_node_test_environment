@@ -17,6 +17,7 @@ docker_distribution_configmap_yaml_path: /root/configmap_docker_distribution.yml
 docker_distribution_configmap_name: docker-registry-conf
 nginx_configmap_name: nginx-conf
 nginx_configmap_yaml_path: /root/configmap_nginx_conf.yml
+nginx_deployment_yaml_path: /root/nginx_deployment.yaml
 
 # Secret for nginx
 secret_name_htpasswd: basic-auth
@@ -34,5 +35,5 @@ use_docker_registry_clusterip: true
 
 # allocate a port from a range 30000-32767(nginx)
 nginx_registry_nodeport: 30051
-use_nginx_nodeport: true
-use_nginx_clusterip: false
+use_nginx_nodeport: false
+use_nginx_clusterip: true

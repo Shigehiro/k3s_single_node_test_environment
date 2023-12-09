@@ -1,30 +1,7 @@
 ---
-#- name: create pvc for docker registry
-#  ansible.builtin.template:
-#    src: pvc_docker_registry.yaml.j2 
-#    dest: "{{ docker_registry_pvc_yaml_path }}"
-#    owner: root
-#    group: root
-#    mode: '0644'
-#
-#- name: check if pvc {{ pvc_name_docker_registry }} exists
-#  ansible.builtin.shell:
-#    cmd: "kubectl get pvc | grep -c {{ pvc_name_docker_registry }}"
-#  ignore_errors: true
-#  failed_when: false
-#  changed_when: false
-#  register: pvc_docker_out
-#  
-#- name: create pvc {{ pvc_name_docker_registry }}
-#  ansible.builtin.command:
-#    cmd: "kubectl apply -f {{ docker_registry_pvc_yaml_path }}"
-#  environment: 
-#    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
-#  when: "pvc_docker_out.stdout|int==0"
-
 - name: copy template for ConfigMap of nginx
   ansible.builtin.template:
-    src: configmap_docker_distribution.yml.j2
+    src: configmap_nginx_conf.yml.j2
     dest: "{{ nginx_configmap_yaml_path }}"
     owner: root
     group: root
@@ -36,24 +13,24 @@
   ignore_errors: true
   failed_when: false
   changed_when: false
-  register: cm_registry
+  register: cm_nginx
 
 - name: create ConfigMap {{ nginx_configmap_name }}
   ansible.builtin.command:
     cmd: "kubectl apply -f {{ nginx_configmap_yaml_path }}"
   environment: 
     KUBECONFIG: /etc/rancher/k3s/k3s.yaml
-  when: "cm_registry.stdout|int==0"
+  when: "cm_nginx.stdout|int==0"
 
-- name: copy template for Deployment nginx(nodeport)
-  ansible.builtin.template:
-    src: nginx_deployment_nodport.yaml.j2
-    dest: "{{ nginx_deployment_yaml_path }}"
-    owner: root
-    group: root
-    mode: '0644'
-  when:
-  - use_nginx_nodeport
+#- name: copy template for Deployment nginx(nodeport)
+#  ansible.builtin.template:
+#    src: nginx_deployment_nodport.yaml.j2
+#    dest: "{{ nginx_deployment_yaml_path }}"
+#    owner: root
+#    group: root
+#    mode: '0644'
+#  when:
+#  - use_nginx_nodeport
 
 - name: copy template for Deployment nginx(cluster ip)
   ansible.builtin.template:
@@ -65,17 +42,17 @@
   when:
   - use_nginx_clusterip
 
-- name: check if Deployment nginx exists
-  ansible.builtin.shell:
-    cmd: "kubectl get deployment | grep -c nginx"
-  ignore_errors: true
-  failed_when: false
-  changed_when: false
-  register: deployment_nginx
-
-- name: create deployment nginx
-  ansible.builtin.command:
-    cmd: "kubectl apply -f {{ nginx_deployment_yaml_path }}"
-  environment: 
-    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
-  when: "deployment_nginx.stdout|int==0"
+#- name: check if Deployment nginx exists
+#  ansible.builtin.shell:
+#    cmd: "kubectl get deployment | grep -c nginx"
+#  ignore_errors: true
+#  failed_when: false
+#  changed_when: false
+#  register: deployment_nginx
+#
+#- name: create deployment nginx
+#  ansible.builtin.command:
+#    cmd: "kubectl apply -f {{ nginx_deployment_yaml_path }}"
+#  environment: 
+#    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+#  when: "deployment_nginx.stdout|int==0"
