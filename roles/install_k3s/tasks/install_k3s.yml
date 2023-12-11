@@ -23,6 +23,8 @@
     ansible.builtin.command:
       cmd: /root/install_k3s.sh
     register: output
+    environment:
+      INSTALL_K3S_EXEC: "--cluster-domain {{ cluster_domain }} --service-node-port-range {{ service_port_range }}"
     failed_when: output.rc | int != 0
 
   - name: dump result 
@@ -45,7 +47,7 @@
     ansible.builtin.command:
       cmd: /root/install_k3s.sh
     environment:
-      INSTALL_K3S_EXEC: "--disable servicelb" 
+      INSTALL_K3S_EXEC: "--disable servicelb --cluster-domain {{ cluster_domain }} --service-node-port-range {{ service_port_range }}"
     register: output
     failed_when: output.rc | int != 0
     when: disable_service_lb

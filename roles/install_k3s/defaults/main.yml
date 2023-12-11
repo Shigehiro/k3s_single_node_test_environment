@@ -2,3 +2,5 @@
 # defaults file for install_k3s
 disable_service_lb: false
 kubectl_completion_file: /etc/bash_completion.d/kubectl
+cluster_domain: cluster.local
+service_port_range: 30000-32767
