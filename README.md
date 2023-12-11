@@ -7,7 +7,7 @@
   - [Rook test](#rook-test)
   - [AWX](#awx)
   - [Gitea](#gitea)
-  - [Private container registry](#private-container-registry)
+  - [Private container registry(Docker Distribution)](#private-container-registrydocker-distribution)
   - [Uninstall k3s](#uninstall-k3s)
 
 ## Description
@@ -169,11 +169,31 @@ gitea-http   NodePort   10.43.89.28   <none>        3000:30000/TCP   2m14s
 gitea-ssh    NodePort   10.43.100.5   <none>        22:30001/TCP     2m14s
 ```
 
-## Private container registry
+## Private container registry(Docker Distribution)
+
+Basic authentication has not been implemented yet.<br>
+Every user can push/pull images from this repository.<br>
+The Nginx container will receive requests from clients and then proxy the requests to Docker Distribution.<br>
+TLS is enabled on the Nginx (Listening on port 30051).<br>
 
 Referecnce:
 - https://github.com/docker-archive/docker-registry/tree/master/contrib/nginx
  
+
+<br>Private registry IP is `https:// k8s host ip:30051`
+```
+$ curl -k https://192.168.126.10:30051/v2/_catalog
+{"repositories":[]}
+
+$ grep insecure /etc/docker/daemon.json 
+  "insecure-registries" : ["http://192.168.220.150:5000", "192.168.123.10:5000", "https://192.168.126.10:30051"],
+
+$ docker push 192.168.126.10:30051/ubuntu:latest 
+The push refers to repository [192.168.126.10:30051/ubuntu]
+f4a670ac65b6: Pushed 
+latest: digest: sha256:817cfe4672284dcbfee885b1a66094fd907630d610cab329114d036716be49ba size: 529
+```
+
 ## Uninstall k3s
 
 ```shell

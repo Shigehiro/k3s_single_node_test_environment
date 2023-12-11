@@ -34,6 +34,6 @@ use_docker_registry_nodeport: false
 use_docker_registry_clusterip: true
 
 # allocate a port from a range 30000-32767(nginx)
-nginx_registry_nodeport: 30051
-use_nginx_nodeport: false
-use_nginx_clusterip: true
+nginx_nodeport: 30051
+use_nginx_nodeport: true
+use_nginx_clusterip: false

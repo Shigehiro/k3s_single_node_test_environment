@@ -1,0 +1,60 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  type: NodePort
+  ports:
+  - name: tcp-443
+    port: 443
+    targetPort: 443
+    nodePort: {{ nginx_nodeport }}
+    protocol: TCP
+  selector:
+    app: nginx-registry
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-registry
+  labels:
+    app: nginx-registry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-registry
+  template:
+    metadata:
+      labels:
+        app: nginx-registry
+    spec:
+      containers:
+      - name: nginx-registry
+        image: docker.io/nginx
+        ports:
+        - containerPort: 443
+        volumeMounts:
+        - name: secret-volume-ssl
+          mountPath: /etc/secret-volume-ssl
+          readOnly: true
+        - name: secret-volume-htpasswd
+          mountPath: /etc/secret-volume-htpasswd
+          readOnly: true
+        - name: {{ nginx_configmap_name }}
+          readOnly: true
+          mountPath: /etc/nginx
+      volumes:
+      - name: secret-volume-ssl
+        secret:
+          secretName: registry-secret
+      - name: secret-volume-htpasswd
+        secret:
+          secretName: basic-auth
+      - name: {{ nginx_configmap_name }}
+        configMap:
+          name: {{ nginx_configmap_name }}
+          items:
+          - key: nginx.conf
+            path: nginx.conf

@@ -34,9 +34,13 @@ pvc_name_docker_registry: pvc-registry
 docker_registry_stoage_class_name: local-path
 docekr_registry_storage_size: 5Gi
 docker_registry_pvc_yaml_path: /root/docker_registry_pvc.yaml
-htpasswd_file_path: /root/htpasswd
-basic_auth_user:
-- user: "admin"
-  pass: "admin"
-- user: "test01"
-  pass: "test01"
+
+# docker distribution. allocate a port from a range 30000-32767(docker distribution)
+docker_registry_nodeport: 30050
+use_docker_registry_nodeport: false
+use_docker_registry_clusterip: true
+
+# docker distribution. allocate a port from a range 30000-32767(nginx)
+nginx_nodeport: 30051
+use_nginx_nodeport: true
+use_nginx_clusterip: false

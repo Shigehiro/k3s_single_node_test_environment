@@ -22,15 +22,16 @@
     KUBECONFIG: /etc/rancher/k3s/k3s.yaml
   when: "cm_nginx.stdout|int==0"
 
-#- name: copy template for Deployment nginx(nodeport)
-#  ansible.builtin.template:
-#    src: nginx_deployment_nodport.yaml.j2
-#    dest: "{{ nginx_deployment_yaml_path }}"
-#    owner: root
-#    group: root
-#    mode: '0644'
-#  when:
-#  - use_nginx_nodeport
+- name: copy template for Deployment nginx(nodeport)
+  ansible.builtin.template:
+    src: nginx_deployment_nodeport.yaml.j2
+    dest: "{{ nginx_deployment_yaml_path }}"
+    owner: root
+    group: root
+    mode: '0644'
+  when:
+  - use_nginx_nodeport
+  - not use_nginx_clusterip
 
 - name: copy template for Deployment nginx(cluster ip)
   ansible.builtin.template:
@@ -41,18 +42,19 @@
     mode: '0644'
   when:
   - use_nginx_clusterip
+  - not use_nginx_nodeport
 
-#- name: check if Deployment nginx exists
-#  ansible.builtin.shell:
-#    cmd: "kubectl get deployment | grep -c nginx"
-#  ignore_errors: true
-#  failed_when: false
-#  changed_when: false
-#  register: deployment_nginx
-#
-#- name: create deployment nginx
-#  ansible.builtin.command:
-#    cmd: "kubectl apply -f {{ nginx_deployment_yaml_path }}"
-#  environment: 
-#    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
-#  when: "deployment_nginx.stdout|int==0"
+- name: check if Deployment nginx exists
+  ansible.builtin.shell:
+    cmd: "kubectl get deployment | grep -c nginx"
+  ignore_errors: true
+  failed_when: false
+  changed_when: false
+  register: deployment_nginx
+
+- name: create deployment for nginx
+  ansible.builtin.command:
+    cmd: "kubectl apply -f {{ nginx_deployment_yaml_path }}"
+  environment: 
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+  when: "deployment_nginx.stdout|int==0"
