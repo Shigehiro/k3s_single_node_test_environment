@@ -13,10 +13,12 @@
 ## Description
 
 This playbook will set up k3s single node for the testing.
-- install k3s
-- install Ceph Rook as CSI[1]
-- install MetalLB with layer2 mode[2]
-- install AWX
+- Install k3s
+- Install Ceph Rook as CSI[1]
+- Install MetalLB with layer2 mode[2]
+- Install AWX
+- Install Gitea
+- Install Private Container Registry(Docker Distribution)
 
 <br>[1] To use Rook, add an additional block device(/dev/vdb etc) for Ceph BlueStore
 <br>[2] To use MetalLB, disable service lb(klipper lb). You can disable servicelb in group_vars
